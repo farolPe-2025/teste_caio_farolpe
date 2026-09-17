@@ -262,13 +262,13 @@ export const panels: Panel[] = [
         {
           title: "Como é calculado",
           paragraphs: [
-            "O IBGE levanta, junto às empresas industriais do país, informações contábeis e de pessoal ocupado referentes ao ano anterior. O principal resultado é o Valor Bruto da Produção Industrial (VBPI), complementado por número de empresas, empregos formais e produtividade média (VBPI em relação ao pessoal ocupado). Como o valor de produção varia de um ano para outro também por efeito da inflação, e não apenas por mudanças na quantidade produzida, comparar diretamente valores em reais de anos diferentes pode induzir a erro: um valor maior pode refletir apenas preços mais altos, não necessariamente mais produção. Por isso, a SDEC-PE deflaciona (converte a preços constantes) os valores nominais divulgados pelo IBGE, trazendo-os a preços de 2026 – a mesma base usada em todos os valores monetários do Observatório. O deflator utilizado é o Índice Nacional de Preços ao Consumidor Amplo (IPCA), a referência oficial de inflação do Banco Central do Brasil, calculado e divulgado pelo IBGE; os dados de variação do IPCA são obtidos na série 'Preços - IPCA - variação (PRECOS_IPCAG)' do Ipeadata, banco de dados público mantido pelo Instituto de Pesquisa Econômica Aplicada (IPEA). O cálculo acumula a variação do IPCA entre o ano de referência de cada valor e 2026, obtendo um fator de correção que, multiplicado pelo valor nominal, resulta no valor a preços de 2026. Por se tratar de uma conversão feita pela própria SDECPE – e não de um número publicado dessa forma pelo IBGE, que divulga os valores a preços correntes de cada ano –, os valores podem sofrer pequenos ajustes caso o IBGE revise algum mês do IPCA.",
+            "O IBGE levanta, junto às empresas industriais do país, informações contábeis e de pessoal ocupado referentes ao ano anterior. O principal resultado é o Valor Bruto da Produção Industrial (VBPI), complementado por número de empresas, empregos formais e produtividade média (VBPI em relação ao pessoal ocupado). Como o valor de produção varia de um ano para outro também por efeito da inflação, e não apenas por mudanças na quantidade produzida, comparar diretamente valores em reais de anos diferentes pode induzir a erro: um valor maior pode refletir apenas preços mais altos, não necessariamente mais produção. Por isso, a SDEC-PE deflaciona (converte a preços constantes) os valores nominais divulgados pelo IBGE, trazendo-os a preços de 2026 – a mesma base usada em todos os valores monetários do FarolPE. O deflator utilizado é o Índice Nacional de Preços ao Consumidor Amplo (IPCA), a referência oficial de inflação do Banco Central do Brasil, calculado e divulgado pelo IBGE; os dados de variação do IPCA são obtidos na série 'Preços - IPCA - variação (PRECOS_IPCAG)' do Ipeadata, banco de dados público mantido pelo Instituto de Pesquisa Econômica Aplicada (IPEA). O cálculo acumula a variação do IPCA entre o ano de referência de cada valor e 2026, obtendo um fator de correção que, multiplicado pelo valor nominal, resulta no valor a preços de 2026. Por se tratar de uma conversão feita pela própria SDECPE – e não de um número publicado dessa forma pelo IBGE, que divulga os valores a preços correntes de cada ano –, os valores podem sofrer pequenos ajustes caso o IBGE revise algum mês do IPCA.",
           ],
         },
         {
           title: "Dados disponíveis",
           paragraphs: [
-            "A PIA apresenta dados referentes ao valor da produção em reais, quantidade de empresas e quantidade de empregos do setor. Devido à mudança metodológica ocorrida neste ano, a PIA-Empresa 2024 não é comparável à de anos anteriores e, por isso, o IBGE rompeu a série histórica a partir do ano-base de 2024. A principal mudança foi no desenho amostral: o corte do estrato certo – empresas automaticamente incluídas na amostra, sem sorteio – subiu de 20 para 30 pessoas ocupadas, passando também a incluir empresas com receita bruta superior a R$ 100 milhões independentemente do porte; houve ainda alterações na estrutura de apresentação dos resultados. Por isso, o Observatório evita comparar a edição de 2024 com edições anteriores a esse ano, priorizando comparações entre estados dentro da própria edição.",
+            "A PIA apresenta dados referentes ao valor da produção em reais, quantidade de empresas e quantidade de empregos do setor. Devido à mudança metodológica ocorrida neste ano, a PIA-Empresa 2024 não é comparável à de anos anteriores e, por isso, o IBGE rompeu a série histórica a partir do ano-base de 2024. A principal mudança foi no desenho amostral: o corte do estrato certo – empresas automaticamente incluídas na amostra, sem sorteio – subiu de 20 para 30 pessoas ocupadas, passando também a incluir empresas com receita bruta superior a R$ 100 milhões independentemente do porte; houve ainda alterações na estrutura de apresentação dos resultados. Por isso, o FarolPE evita comparar a edição de 2024 com edições anteriores a esse ano, priorizando comparações entre estados dentro da própria edição.",
           ],
         },
         {
@@ -307,7 +307,7 @@ export const panels: Panel[] = [
         {
           title: "Como é calculado",
           paragraphs: [
-            "O IBGE pesquisa uma amostra de empresas comerciais e constrói índices de volume de vendas, com anobase na média de 2022 (2022 = 100). O IBGE divulga o número-índice com ajuste sazonal apenas para o Brasil e para o total do varejo de cada estado, ou seja, não para o detalhamento por atividade (supermercados, móveis, vestuário etc.) dentro de cada unidade da federação. Para permitir a comparação mês a mês entre esses segmentos e entre estados, a SDEC-PE dessazonaliza essas séries por conta própria, com o método X13ARIMA-SEATS, desenvolvido pelo U.S. Census Bureau a partir do X-11 e incorporando o modelo TRAMO-SEATS do Banco da Espanha — hoje o padrão internacional de ajuste sazonal, adotado também pelo IBGE, pelo Banco Central do Brasil e pelo Eurostat. O procedimento modela cada série, identifica o padrão que se repete todos os anos (datas comemorativas, 13º salário, dias úteis) e o remove, deixando à mostra apenas a variação efetiva de um mês para o outro. Por resultar de estimação estatística, e não de um número oficialmente publicado pelo IBGE, esses valores podem sofrer pequenas revisões conforme novos dados são incorporados à série.",
+            "O IBGE pesquisa uma amostra de empresas comerciais e constrói índices de volume de vendas, com anobase na média de 2022 (2022 = 100). O IBGE divulga o número-índice com ajuste sazonal apenas para o Brasil e para o total do varejo de cada estado, ou seja, não para o detalhamento por atividade (supermercados, móveis, vestuário etc.) dentro de cada unidade da federação. Para permitir a comparação mês a mês entre esses segmentos e entre estados, a SDEC-PE dessazonaliza essas séries por conta própria, com o método X13ARIMA-SEATS, desenvolvido pelo U.S. Census Bureau a partir do X-11 e incorporando o modelo TRAMO-SEATS do Banco da Espanha – hoje o padrão internacional de ajuste sazonal, adotado também pelo IBGE, pelo Banco Central do Brasil e pelo Eurostat. O procedimento modela cada série, identifica o padrão que se repete todos os anos (datas comemorativas, 13º salário, dias úteis) e o remove, deixando à mostra apenas a variação efetiva de um mês para o outro. Por resultar de estimação estatística, e não de um número oficialmente publicado pelo IBGE, esses valores podem sofrer pequenas revisões conforme novos dados são incorporados à série.",
           ],
         },
         {
@@ -390,7 +390,7 @@ export const panels: Panel[] = [
         {
           title: "Como é calculado",
           paragraphs: [
-            "O IBGE pesquisa uma amostra de empresas comerciais, estratificada por Unidade da Federação e por atividade (segundo a Classificação Nacional de Atividades Econômicas, CNAE). O principal resultado é a Receita Líquida de Revenda, complementada pela margem de comercialização (a diferença entre a receita líquida de revenda e o custo das mercadorias revendidas), número de empresas e pessoal ocupado. Como esses valores variam de um ano para outro também por efeito da inflação, e não apenas por mudanças na quantidade comercializada, a SDEC-PE deflaciona (converte a preços constantes) os valores nominais divulgados pelo IBGE, trazendo-os a preços de 2026 – a mesma base usada em todos os valores monetários do Observatório. O deflator utilizado é o Índice Nacional de Preços ao Consumidor Amplo (IPCA), a referência oficial de inflação do Banco Central do Brasil, calculado e divulgado pelo IBGE; os dados de variação do IPCA são obtidos na série 'Preços - IPCA - variação (PRECOS_IPCAG)' do Ipeadata, banco de dados público mantido pelo Instituto de Pesquisa Econômica Aplicada (IPEA). O cálculo acumula a variação do IPCA entre o ano de referência de cada valor e 2026, obtendo um fator de correção que, multiplicado pelo valor nominal, resulta no valor a preços de 2026. A PAC não é aberta por município: o menor recorte geográfico disponível é a Unidade da Federação.",
+            "O IBGE pesquisa uma amostra de empresas comerciais, estratificada por Unidade da Federação e por atividade (segundo a Classificação Nacional de Atividades Econômicas, CNAE). O principal resultado é a Receita Líquida de Revenda, complementada pela margem de comercialização (a diferença entre a receita líquida de revenda e o custo das mercadorias revendidas), número de empresas e pessoal ocupado. Como esses valores variam de um ano para outro também por efeito da inflação, e não apenas por mudanças na quantidade comercializada, a SDEC-PE deflaciona (converte a preços constantes) os valores nominais divulgados pelo IBGE, trazendo-os a preços de 2026 – a mesma base usada em todos os valores monetários do FarolPE. O deflator utilizado é o Índice Nacional de Preços ao Consumidor Amplo (IPCA), a referência oficial de inflação do Banco Central do Brasil, calculado e divulgado pelo IBGE; os dados de variação do IPCA são obtidos na série 'Preços - IPCA - variação (PRECOS_IPCAG)' do Ipeadata, banco de dados público mantido pelo Instituto de Pesquisa Econômica Aplicada (IPEA). O cálculo acumula a variação do IPCA entre o ano de referência de cada valor e 2026, obtendo um fator de correção que, multiplicado pelo valor nominal, resulta no valor a preços de 2026. A PAC não é aberta por município: o menor recorte geográfico disponível é a Unidade da Federação.",
           ],
         },
         {
@@ -402,7 +402,7 @@ export const panels: Panel[] = [
         {
           title: "Síntese da leitura mais recente",
           paragraphs: [
-            "Na edição mais recente (referente a 2023), o setor comercial brasileiro ocupava 10,5 milhões de pessoas em cerca de 1,5 milhão de empresas – o terceiro ano seguido de crescimento da ocupação no setor. Os resultados por Unidade da Federação, incluindo o detalhamento de Pernambuco, serão incorporados a esta síntese na próxima atualização do Observatório.",
+            "Na edição mais recente (referente a 2023), o setor comercial brasileiro ocupava 10,5 milhões de pessoas em cerca de 1,5 milhão de empresas – o terceiro ano seguido de crescimento da ocupação no setor. Os resultados por Unidade da Federação, incluindo o detalhamento de Pernambuco, serão incorporados a esta síntese na próxima atualização do FarolPE.",
           ],
         },
       ],
@@ -432,7 +432,7 @@ export const panels: Panel[] = [
         {
           title: "Como é calculado",
           paragraphs: [
-            "O IBGE pesquisa uma amostra de empresas do setor, estratificada por Unidade da Federação e por atividade (segundo a Classificação Nacional de Atividades Econômicas, CNAE), reunidas em sete grandes segmentos: serviços prestados principalmente às famílias; serviços de informação e comunicação; serviços profissionais, administrativos e complementares; transportes e serviços auxiliares aos transportes e correio; atividades imobiliárias; serviços de manutenção e reparação; e outras atividades de serviços. O principal resultado é a Receita Operacional Líquida (ROL), complementada por número de empresas e pessoal ocupado. Como o valor da receita varia de um ano para outro também por efeito da inflação, e não apenas por mudanças na quantidade de serviços prestada, a SDEC-PE deflaciona (converte a preços constantes) os valores nominais divulgados pelo IBGE, trazendo-os a preços de 2026 — a mesma base usada em todos os valores monetários do Observatório. O deflator utilizado é o Índice Nacional de Preços ao Consumidor Amplo (IPCA), a referência oficial de inflação do Banco Central do Brasil, calculado e divulgado pelo IBGE; os dados de variação do IPCA são obtidos na série 'Preços - IPCA - variação (PRECOS_IPCAG)' do Ipeadata, banco de dados público mantido pelo Instituto de Pesquisa Econômica Aplicada (IPEA). O cálculo acumula a variação do IPCA entre o ano de referência de cada valor e 2026, obtendo um fator de correção que, multiplicado pelo valor nominal, resulta no valor a preços de 2026. A PAS não é aberta por município: o menor recorte geográfico disponível é a Unidade da Federação.",
+            "O IBGE pesquisa uma amostra de empresas do setor, estratificada por Unidade da Federação e por atividade (segundo a Classificação Nacional de Atividades Econômicas, CNAE), reunidas em sete grandes segmentos: serviços prestados principalmente às famílias; serviços de informação e comunicação; serviços profissionais, administrativos e complementares; transportes e serviços auxiliares aos transportes e correio; atividades imobiliárias; serviços de manutenção e reparação; e outras atividades de serviços. O principal resultado é a Receita Operacional Líquida (ROL), complementada por número de empresas e pessoal ocupado. Como o valor da receita varia de um ano para outro também por efeito da inflação, e não apenas por mudanças na quantidade de serviços prestada, a SDEC-PE deflaciona (converte a preços constantes) os valores nominais divulgados pelo IBGE, trazendo-os a preços de 2026 – a mesma base usada em todos os valores monetários do FarolPE. O deflator utilizado é o Índice Nacional de Preços ao Consumidor Amplo (IPCA), a referência oficial de inflação do Banco Central do Brasil, calculado e divulgado pelo IBGE; os dados de variação do IPCA são obtidos na série 'Preços - IPCA - variação (PRECOS_IPCAG)' do Ipeadata, banco de dados público mantido pelo Instituto de Pesquisa Econômica Aplicada (IPEA). O cálculo acumula a variação do IPCA entre o ano de referência de cada valor e 2026, obtendo um fator de correção que, multiplicado pelo valor nominal, resulta no valor a preços de 2026. A PAS não é aberta por município: o menor recorte geográfico disponível é a Unidade da Federação.",
           ],
         },
         {
@@ -444,7 +444,7 @@ export const panels: Panel[] = [
         {
           title: "Síntese da leitura mais recente",
           paragraphs: [
-            "Na edição mais recente (referente a 2023), o setor de serviços não financeiros do Brasil ocupou 15,2 milhões de pessoas em 1,7 milhão de empresas ativas, com R$ 3,2 trilhões em receita operacional líquida — pela primeira vez na série histórica, o grupo de serviços profissionais liderou a receita do setor, à frente de transportes. Na Região Nordeste, o setor ocupava 2,3 milhões de pessoas, 20,2% a mais que dez anos antes. Os resultados por Unidade da Federação, incluindo o detalhamento de Pernambuco, serão incorporados a esta síntese na próxima atualização do Observatório.",
+            "Na edição mais recente (referente a 2023), o setor de serviços não financeiros do Brasil ocupou 15,2 milhões de pessoas em 1,7 milhão de empresas ativas, com R$ 3,2 trilhões em receita operacional líquida – pela primeira vez na série histórica, o grupo de serviços profissionais liderou a receita do setor, à frente de transportes. Na Região Nordeste, o setor ocupava 2,3 milhões de pessoas, 20,2% a mais que dez anos antes. Os resultados por Unidade da Federação, incluindo o detalhamento de Pernambuco, serão incorporados a esta síntese na próxima atualização do FarolPE.",
           ],
         },
       ],
@@ -521,6 +521,7 @@ export const panels: Panel[] = [
     legacyId: "bi-outros-emprego",
     title: "Pessoas e taxa",
     shortTitle: "População e taxas",
+    research: "PNADC",
     category: "Emprego",
     eyebrow: "Mercado de trabalho",
     description:
@@ -528,17 +529,84 @@ export const panels: Panel[] = [
     source: "Microsoft Fabric",
     embedUrl:
       "https://app.fabric.microsoft.com/view?r=eyJrIjoiOGRiNzA3OTgtYTZjMy00N2VlLWIzYWEtNjNiZWEwMGQwYTkxIiwidCI6ImEzMDA5OGM1LWQ1NDMtNDc2Zi04NTM4LTE3YjhlYmE0MzM4MSJ9",
+    info: {
+      eyebrow: "Sobre o indicador · PNAD Contínua",
+      title: "Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD Contínua)",
+      cards: [
+        {
+          title: "O que é",
+          paragraphs: [
+            "Conduzida trimestralmente pelo Instituto Brasileiro de Geografia e Estatística (IBGE), a PNAD Contínua é a fonte oficial de acompanhamento do mercado de trabalho brasileiro. Diferentemente de registros administrativos como o Novo Cadastro Geral de Empregados e Desempregados (Novo CAGED), que só enxergam o vínculo formal celetista, a PNAD Contínua é uma pesquisa domiciliar: entrevista famílias e capta também o trabalhador informal, o autônomo, o empregado doméstico sem carteira e o trabalhador familiar auxiliar – por isso é o instrumento adequado para medir desemprego em um estado como Pernambuco, no qual mais da metade dos ocupados está na informalidade.",
+          ],
+        },
+        {
+          title: "Como é calculado",
+          paragraphs: [
+            "A pesquisa organiza a população em uma hierarquia: a população em idade de trabalhar (14 anos ou mais) se divide entre quem está na força de trabalho – ocupados e desocupados – e quem está fora dela. A taxa de desocupação é a razão entre desocupados e força de trabalho, e não entre desocupados e a população total; por isso ela pode cair tanto porque pessoas encontraram ocupação quanto porque desistiram de procurar. Para distinguir os dois casos, o painel acompanha também a taxa de participação (quantos estão no mercado, ocupados ou buscando trabalho) e o nível de ocupação (quantos estão de fato trabalhando).",
+          ],
+        },
+        {
+          title: "Margem de erro e significância estatística",
+          paragraphs: [
+            "A PNAD Contínua é uma pesquisa amostral, não um censo: em Pernambuco, o IBGE entrevista alguns milhares de domicílios para estimar o comportamento de cerca de 7,7 milhões de pessoas em idade de trabalhar. Por isso, cada valor divulgado vem acompanhado de uma margem de erro que aparece nas séries do painel como uma faixa em torno da linha principal – de forma parecida com uma pesquisa eleitoral, em que um candidato com 42% das intenções de voto e margem de erro de dois pontos está, na prática, entre 40% e 44%. Quando as faixas de dois períodos se sobrepõem, a diferença entre eles não pode ser afirmada com segurança, ainda que os números divulgados sejam diferentes – é o que a pesquisa chama de 'estabilidade estatística'.",
+          ],
+        },
+        {
+          title: "Dados disponíveis",
+          paragraphs: [
+            "O painel traz taxa de desocupação, taxa de participação na força de trabalho, nível de ocupação, taxa composta de subutilização e taxa de desalento, com recortes por sexo, cor ou raça, faixa etária, nível de instrução e localização (capital, restante da Região Metropolitana do Recife e interior), além da comparação de Pernambuco com os demais estados, o Nordeste e o Brasil.",
+          ],
+        },
+        {
+          title: "Síntese da leitura mais recente",
+          paragraphs: [
+            "No 2º trimestre de 2026, a taxa de desocupação de Pernambuco caiu de 10,37% para 8,33% em doze meses – a maior redução do Nordeste e a segunda maior do país, e o menor patamar do estado desde o primeiro trimestre de 2015. Na comparação com o trimestre anterior a leitura correta é de estabilidade: a queda de 9,18% para 8,33% não é estatisticamente significante, e cai para apenas 0,41 ponto percentual depois de removida a sazonalidade própria do primeiro trimestre. O ponto de atenção do trimestre é que a taxa de participação recuou de 54,60% para 51,77% em doze meses – uma queda significante que indica que parte da redução do desemprego decorreu da saída de pessoas da força de trabalho, e não apenas da criação de novas ocupações. A melhora interanual também foi essencialmente masculina e concentrada entre pardos e brancos, enquanto a população preta e os jovens de 14 a 24 anos seguem com taxas bem acima da média estadual.",
+          ],
+        },
+      ],
+    },
   },
   {
     slug: "rendimentos-do-trabalho",
     legacyId: "bi-rendimentos-trabalho",
     title: "Rendimento do trabalho",
     shortTitle: "Rendimento do trabalho",
+    research: "PNADC",
     category: "Emprego",
     eyebrow: "Mercado de trabalho",
     description:
       "Acompanhe os indicadores de rendimento do trabalho em Pernambuco.",
     source: "Link a definir",
+    info: {
+      eyebrow: "Sobre o indicador · PNAD Contínua",
+      title: "Rendimento do trabalho na PNAD Contínua",
+      cards: [
+        {
+          title: "O que é",
+          paragraphs: [
+            "Divulgado trimestralmente pelo IBGE dentro da Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD Contínua), o rendimento médio real de todos os trabalhos mede quanto, em média, as pessoas ocupadas recebem por mês em todas as suas atividades (principal e secundárias), incluindo trabalhadores formais, informais e autônomos captados pela pesquisa domiciliar.",
+          ],
+        },
+        {
+          title: "Como é calculado",
+          paragraphs: [
+            "O IBGE já divulga o rendimento a preços constantes, corrigindo o valor nominal declarado pelo entrevistado pela inflação, de modo que a série é comparável ao longo do tempo em poder de compra. Como o calendário econômico de Pernambuco tem um padrão sazonal recorrente – por exemplo, o pagamento de parcelas remanescentes de gratificação natalina e reajustes no início do ano elevam o rendimento do primeiro trimestre –, o painel também traz a série com ajuste sazonal, para permitir a comparação correta entre trimestres consecutivos. Por se tratar de uma pesquisa amostral, e não de um censo, cada valor divulgado vem com uma margem de erro, e o painel indica quando uma diferença entre períodos está dentro dessa margem, e não pode ser afirmada com segurança.",
+          ],
+        },
+        {
+          title: "Dados disponíveis",
+          paragraphs: [
+            "O painel traz o rendimento médio real de todos os trabalhos, com recortes por sexo, cor ou raça e faixa etária, além da comparação de Pernambuco com os demais estados, o Nordeste e o Brasil, incluindo a série com e sem ajuste sazonal para acompanhar a variação entre trimestres consecutivos.",
+          ],
+        },
+        {
+          title: "Síntese da leitura mais recente",
+          paragraphs: [
+            "No 2º trimestre de 2026, o rendimento médio real de todos os trabalhos em Pernambuco foi de R$ 2.776, estatisticamente estável frente aos R$ 2.832 do mesmo trimestre de 2025. Já frente ao primeiro trimestre de 2026 houve queda significante de R$ 273 (9,0%); mas parte expressiva desse recuo é sazonal – o primeiro trimestre concentra parcelas de gratificação natalina e reajustes de início de ano –, e a retração medida pela série dessazonalizada é bem menor, de R$ 2.916 para R$ 2.860 (-1,9%). O rendimento pernambucano ocupa a 20ª posição entre as 27 unidades da federação e a 4ª do Nordeste, atrás de Sergipe, Rio Grande do Norte e Paraíba.",
+          ],
+        },
+      ],
+    },
   },
   {
     slug: "agricultura",
@@ -579,7 +647,7 @@ export const panels: Panel[] = [
         {
           title: "Síntese da leitura mais recente",
           paragraphs: [
-            "A edição mais recente da PAM (referente a 2024), divulgada pelo IBGE, confirmou Pernambuco entre os maiores produtores nacionais de fruticultura, com destaque para a produção irrigada do Vale do São Francisco (uva e manga). Em nível nacional, o valor da produção agrícola brasileira recuou pelo segundo ano seguido, refletindo a queda de preços e da safra de grãos – um contexto que reforça a importância de acompanhar, no Observatório, o desempenho de cada cultura e região de desenvolvimento separadamente, já que a fruticultura irrigada pernambucana tende a seguir uma dinâmica distinta da dos grãos.",
+            "A edição mais recente da PAM (referente a 2024), divulgada pelo IBGE, confirmou Pernambuco entre os maiores produtores nacionais de fruticultura, com destaque para a produção irrigada do Vale do São Francisco (uva e manga). Em nível nacional, o valor da produção agrícola brasileira recuou pelo segundo ano seguido, refletindo a queda de preços e da safra de grãos – um contexto que reforça a importância de acompanhar, no FarolPE, o desempenho de cada cultura e região de desenvolvimento separadamente, já que a fruticultura irrigada pernambucana tende a seguir uma dinâmica distinta da dos grãos.",
           ],
         },
       ],
@@ -645,6 +713,11 @@ export const mainLinks = [
 
 export const dataRequestUrl =
   "https://forms.gle/aMfCQQ8N4aU1pt4m6";
+
+// Arquivo estático do Panorama Econômico em uso. Atualize esta linha sempre
+// que substituir o export em public/painel-conjuntura-*.html – a Home lê os
+// destaques (.dest .dcard) direto deste arquivo, então ambos ficam em sincronia.
+export const currentPanoramaUrl = "/painel-conjuntura-2026-09-10.html";
 
 export const summaryKpis = [
   {

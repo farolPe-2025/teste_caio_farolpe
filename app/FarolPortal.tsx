@@ -33,7 +33,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import {
-  mainLinks,
+  currentPanoramaUrl,
   panels,
   searchItems,
   summaryKpis,
@@ -255,7 +255,7 @@ function Brand({ compact = false }: { compact?: boolean }) {
             ? "/SDEC_FAROLPE_VERTICAL_VARIAÇÃO.png"
             : "/SDEC_FAROLPE_HORIZONTAL_VARIAÇÃO.png"
         }
-        alt="FarolPE — Observatório Socioeconômico de Pernambuco"
+        alt="FarolPE – Observatório Socioeconômico de Pernambuco"
       />
     </div>
   );
@@ -267,7 +267,7 @@ function SdecLogo({ compact = false }: { compact?: boolean }) {
       <span className="sdec-logo-crop">
         <img
           src="/sdec-gov-branco.png"
-          alt="Secretaria de Desenvolvimento Econômico — Governo de Pernambuco"
+          alt="Secretaria de Desenvolvimento Econômico – Governo de Pernambuco"
         />
       </span>
     </span>
@@ -693,8 +693,74 @@ function SearchDialog({
   );
 }
 
-function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void }) {
-  const [homeMenuOpen, setHomeMenuOpen] = useState(false);
+function toneForHighlight(label: string): string {
+  const normalized = label.toLowerCase();
+  if (normalized.includes("atividade")) return "blue";
+  if (normalized.includes("indústria") || normalized.includes("industrial")) return "green";
+  if (normalized.includes("comércio") || normalized.includes("varejo")) return "gold";
+  if (normalized.includes("emprego") || normalized.includes("caged")) return "red";
+  return "slate";
+}
+
+function panelHrefForHighlight(label: string): string | null {
+  const normalized = label.toLowerCase();
+  if (normalized.includes("atividade")) return "/paineis/atividade-economica";
+  if (normalized.includes("indústria") || normalized.includes("industrial")) return "/paineis/industria";
+  if (normalized.includes("comércio") || normalized.includes("varejo")) return "/paineis/comercio";
+  if (normalized.includes("serviços") || normalized.includes("servico")) return "/paineis/servicos";
+  return null;
+}
+
+function usePanoramaHighlights() {
+  const [highlights, setHighlights] = useState<typeof summaryKpis | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch(currentPanoramaUrl)
+      .then((response) => (response.ok ? response.text() : Promise.reject(response.status)))
+      .then((html) => {
+        if (cancelled) return;
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const cards = Array.from(doc.querySelectorAll(".dest .dcard"));
+        const parsed = cards
+          .map((card) => {
+            const labelNode = card.querySelector(".dl");
+            const label = labelNode
+              ? Array.from(labelNode.childNodes)
+                  .map((node) => node.textContent ?? "")
+                  .join(" ")
+                  .replace(/\s+/g, " ")
+                  .trim()
+              : "";
+            const value = card.querySelector(".dv")?.textContent?.trim() ?? "";
+            const note = card.querySelector(".dc")?.textContent?.trim() ?? "";
+            return {
+              label,
+              value,
+              note,
+              tone: toneForHighlight(label),
+              panelHref: panelHrefForHighlight(label),
+            };
+          })
+          .filter((item) => item.label && item.value);
+
+        if (parsed.length) setHighlights(parsed);
+      })
+      .catch(() => {
+        // Mantém os destaques estáticos de portal-data.ts como reserva.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return highlights ?? summaryKpis;
+}
+
+function Home({ navigate }: { navigate: Navigate }) {
+  const highlights = usePanoramaHighlights();
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>(".reveal-on-scroll"));
@@ -714,54 +780,11 @@ function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void
 
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
-  }, []);
+  }, [highlights]);
 
   return (
     <div className="home-page">
-      <main id="main-content" className="reference-home">
-        <button
-          className={`home-nav-scrim ${homeMenuOpen ? "is-open" : ""}`}
-          onClick={() => setHomeMenuOpen(false)}
-          aria-label="Fechar menu"
-        />
-        <header className="home-header">
-          <button className="brand-button" onClick={() => navigate("/")} aria-label="FarolPE — início">
-            <Brand />
-          </button>
-          <nav className={homeMenuOpen ? "is-open" : ""} aria-label="Navegação principal">
-            {mainLinks.map((item) => (
-              <button
-                key={item.href}
-                className={item.href === "/" ? "is-active" : ""}
-                onClick={() => {
-                  setHomeMenuOpen(false);
-                  navigate(item.href);
-                }}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
-          <button
-            className={`home-menu-toggle ${homeMenuOpen ? "is-open" : ""}`}
-            onClick={() => setHomeMenuOpen((value) => !value)}
-            aria-label={homeMenuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={homeMenuOpen}
-          >
-            <i /><i /><i />
-          </button>
-          <button
-            className="search-trigger"
-            onClick={() => {
-              setHomeMenuOpen(false);
-              onSearch();
-            }}
-            aria-label="Pesquisar no portal"
-          >
-            <SearchIcon />
-          </button>
-        </header>
-
+      <main className="reference-home">
         <section className="hero">
           <div className="hero-copy">
             <h1>
@@ -770,9 +793,8 @@ function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void
               Construir o futuro de Pernambuco.
             </h1>
             <p className="hero-lead">
-              Mudaram as embarcações. Mudaram as rotas. A necessidade de
-              orientação permanece. O <FarolName className="is-on-dark" />
-              {" "}transforma dados em direção para compreender Pernambuco.
+              O <FarolName className="is-on-dark" /> transforma dados em
+              direção para compreender Pernambuco.
             </p>
            <div className="hero-actions">
               <button
@@ -812,7 +834,7 @@ function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void
         <div className="analysis-heading reveal-on-scroll">
           <div>
             <p>Leitura rápida</p>
-            <h2 id="home-analysis-title">Pernambuco em quatro sinais</h2>
+            <h2 id="home-analysis-title">Sinais da economia pernambucana</h2>
             <span className="analysis-intro">
               Indicadores selecionados para uma leitura objetiva do cenário econômico.
             </span>
@@ -820,7 +842,7 @@ function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void
           <button onClick={() => navigate("/panorama")}>Ver análise completa <span>→</span></button>
         </div>
         <div className="analysis-grid">
-          {summaryKpis.map((item, index) => (
+          {highlights.map((item, index) => (
             <article
               key={item.label}
               className={`tone-${item.tone} reveal-on-scroll`}
@@ -851,12 +873,6 @@ function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void
           <h2 id="home-why-title">
             Por que <FarolName />?
           </h2>
-          <span className="home-why-symbol" aria-hidden="true">
-            <img
-              src="/SDEC_FAROLPE_SÍMBOLO_SITE-removebg-preview.png"
-              alt=""
-            />
-          </span>
         </div>
         <div className="home-why-copy reveal-on-scroll">
           <p>
@@ -882,8 +898,8 @@ function Home({ navigate, onSearch }: { navigate: Navigate; onSearch: () => void
       </section>
 
       <footer className="home-footer">
-        <SdecLogo />
         <span>Conhecimento que guia</span>
+        <SdecLogo />
       </footer>
     </div>
   );
@@ -909,6 +925,17 @@ function TopNavigation({
   const rootRef = useRef<HTMLElement>(null);
   const [openMenu, setOpenMenu] = useState<TopMenu>(null);
   const [openPanelGroup, setOpenPanelGroup] = useState<string | null>(null);
+  const isHome = path === "/";
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!isHome) return;
+    const updateScrolled = () => setScrolled(window.scrollY > 24);
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrolled);
+  }, [isHome]);
+
   const isPanoramaContext = path === "/panorama";
   const isPanelsContext =
     path.startsWith("/paineis/") || path.startsWith("/temas/");
@@ -972,16 +999,29 @@ function TopNavigation({
 
     const active = activePanelSlug === panel.slug;
     return (
-      <button
-        className={`top-menu-panel-link ${nested ? "is-nested" : ""} ${
-          active ? "is-active" : ""
-        }`.trim()}
+      <div
+        className={`top-menu-panel-item ${nested ? "is-nested" : ""}`.trim()}
         key={panel.slug}
-        onClick={() => go(`/paineis/${panel.slug}`)}
-        aria-current={active ? "page" : undefined}
       >
-        <span>{panel.shortTitle}</span>
-      </button>
+        <button
+          className={`top-menu-panel-link ${active ? "is-active" : ""}`.trim()}
+          onClick={() => go(`/paineis/${panel.slug}`)}
+          aria-current={active ? "page" : undefined}
+        >
+          <span>{panel.shortTitle}</span>
+        </button>
+        {panel.info && (
+          <button
+            type="button"
+            className="top-menu-panel-info-button"
+            onClick={() => go(`/paineis/${panel.slug}/metodologia`)}
+            aria-label={`Saiba mais sobre os dados de ${panel.shortTitle}`}
+            title="Saiba mais sobre estes dados"
+          >
+            <Info aria-hidden="true" />
+          </button>
+        )}
+      </div>
     );
   };
 
@@ -993,12 +1033,17 @@ function TopNavigation({
         aria-label="Fechar menu"
         tabIndex={mobileOpen ? 0 : -1}
       />
-      <header className="top-navigation" ref={rootRef}>
+      <header
+        className={`top-navigation ${isHome ? "is-home" : ""} ${
+          isHome && (scrolled || mobileOpen) ? "is-scrolled" : ""
+        }`.trim()}
+        ref={rootRef}
+      >
         <div className="top-navigation-bar">
           <button
             className="top-navigation-brand"
             onClick={() => go("/")}
-            aria-label="FarolPE — início"
+            aria-label="FarolPE – início"
           >
             <Brand />
           </button>
@@ -1234,6 +1279,15 @@ function PanelPage({ panel, navigate }: { panel: Panel; navigate: Navigate }) {
             <span>Sobre estes dados</span>
           </button>
         )}
+        <div className="mobile-bi-notice" role="note">
+          <Info aria-hidden="true" />
+          <p>
+            Este painel foi desenvolvido para uso em computadores. No celular,
+            gire a tela para o modo paisagem – em modo retrato, filtros de
+            seleção múltipla e outras interações do painel podem não
+            funcionar corretamente.
+          </p>
+        </div>
         <section className="panel-stage">
           <DeferredFrame
             key={panel.embedUrl}
@@ -1317,7 +1371,7 @@ function PanelGroupInfoPage({
         action={
           groupPanels[0] && (
             <button
-              className="button button-outline"
+              className="button button-primary"
               onClick={() => navigate(`/paineis/${groupPanels[0].slug}`)}
             >
               Explorar primeiro painel →
@@ -1329,7 +1383,7 @@ function PanelGroupInfoPage({
         {groupPanels.map((panel) => (
           <article className="theme-panel-card" key={panel.slug}>
             <div className="theme-panel-card-head">
-              <span className="theme-panel-card-tag">{panel.eyebrow}</span>
+              <span className="theme-panel-card-tag">{panel.info?.title ?? panel.eyebrow}</span>
               {panel.info && (
                 <button
                   type="button"
@@ -1377,7 +1431,7 @@ function IndicatorInfoPage({
         description={panel.description}
         action={
           <button
-            className="button button-outline"
+            className="button button-primary"
             onClick={() => navigate(`/paineis/${panel.slug}`)}
           >
             Ver o painel →
@@ -1446,7 +1500,7 @@ function EconomicPanoramaPage() {
       <section className="panel-stage">
         <DeferredFrame
           id="panorama-frame"
-          src="/painel-conjuntura-2026-09-10.html"
+          src={currentPanoramaUrl}
           title="Painel de Conjuntura Econômica de Pernambuco"
           loaderTitle="Carregando o panorama econômico"
           loaderDescription="Preparando os indicadores de Pernambuco…"
@@ -1571,7 +1625,7 @@ function SummaryPage() {
                 <div><span>Importações</span><i className="is-import" /><b>681,6</b></div>
               </div>
               <div className="trade-block">
-                <p>Acumulado jan–jun</p>
+                <p>Acumulado jan-jun</p>
                 <div><span>Exportações</span><i className="is-export long" /><b>1.020</b></div>
                 <div><span>Importações</span><i className="is-import" /><b>3.630</b></div>
               </div>
@@ -1617,14 +1671,14 @@ function SummaryPage() {
                 <span><strong>50,36%</strong>inadimplentes</span>
               </div>
               <div className="donut-legend">
-                <p><i className="red-dot" /> Inadimplentes — 50,36%</p>
-                <p><i /> Adimplentes — 49,64%</p>
+                <p><i className="red-dot" /> Inadimplentes – 50,36%</p>
+                <p><i /> Adimplentes – 49,64%</p>
                 <small>3.652.032 pessoas na condição de inadimplência.</small>
               </div>
             </article>
             <div className="social-stats">
               <article><span>Mulheres</span><strong>53,6%</strong></article>
-              <article><span>Faixa 41–60 anos</span><strong>35,9%</strong></article>
+              <article><span>Faixa 41-60 anos</span><strong>35,9%</strong></article>
               <p>
                 <b>Composição das dívidas</b>
                 Bancos/cartões 33,1% · financeiras 25,1% · contas básicas 11,5%
@@ -1680,7 +1734,7 @@ function SummaryPage() {
         </section>
 
         <footer className="summary-footnote">
-          <span>Painel baseado no Boletim Econômico de Pernambuco — Agosto/2026 · Atividade, comércio e serviços atualizados até maio; indústria até junho/2026.</span>
+          <span>Painel baseado no Boletim Econômico de Pernambuco – Agosto/2026 · Atividade, comércio e serviços atualizados até maio; indústria até junho/2026.</span>
           <b>Secretaria de Desenvolvimento Econômico de Pernambuco</b>
         </footer>
       </div>
@@ -2044,7 +2098,8 @@ export default function FarolPortal() {
     : undefined;
 
   let content: React.ReactNode;
-  if (pathname === "/panorama") content = <EconomicPanoramaPage />;
+  if (pathname === "/") content = <Home navigate={navigate} />;
+  else if (pathname === "/panorama") content = <EconomicPanoramaPage />;
   else if (pathname === "/sobre") content = <AboutPage navigate={navigate} />;
   else if (pathname === "/dicionario-de-dados") content = <DataDictionaryPage />;
   else if (pathname === "/publicacoes") content = <PublicationsPage />;
@@ -2058,13 +2113,9 @@ export default function FarolPortal() {
       <a className="skip-link" href="#main-content">
         Pular para o conteúdo
       </a>
-      {pathname === "/" ? (
-        <Home navigate={navigate} onSearch={() => setSearchOpen(true)} />
-      ) : (
-        <AppShell path={pathname} navigate={navigate} onSearch={() => setSearchOpen(true)}>
-          {content}
-        </AppShell>
-      )}
+      <AppShell path={pathname} navigate={navigate} onSearch={() => setSearchOpen(true)}>
+        {content}
+      </AppShell>
       {searchOpen && (
         <SearchDialog open onClose={() => setSearchOpen(false)} navigate={navigate} />
       )}

@@ -1321,6 +1321,53 @@ kbd {
   }
 }
 
+.mobile-bi-notice {
+  display: none;
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .panel-page.is-embedded .panel-stage {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  .panel-info-fab {
+    position: static;
+    order: -2;
+    align-self: flex-end;
+    margin: 10px 10px 0;
+  }
+
+  .mobile-bi-notice {
+    z-index: 15;
+    display: flex;
+    order: -1;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 10px 10px 0;
+    padding: 10px 12px;
+    border: 1px solid #f3d98b;
+    border-radius: 10px;
+    background: #fff7e0;
+    color: #6b4f04;
+  }
+
+  .mobile-bi-notice svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    margin-top: 1px;
+  }
+
+  .mobile-bi-notice p {
+    margin: 0;
+    font-size: 11.5px;
+    line-height: 1.45;
+  }
+}
+
 .panel-page.is-embedded .panel-stage {
   width: 100%;
   height: 100%;
@@ -1725,6 +1772,10 @@ kbd {
   margin-top: 11px;
 }
 
+.info-grid article:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .info-grid article.is-placeholder {
   border-style: dashed;
   background: #fbfaf4;
@@ -2083,8 +2134,8 @@ kbd {
 
 .publication-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .publication-card {
@@ -2135,18 +2186,18 @@ kbd {
 }
 
 .publication-card-copy {
-  padding: 24px;
+  padding: 16px;
 }
 
 .publication-card-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   text-transform: uppercase;
 }
 
@@ -2155,38 +2206,42 @@ kbd {
 }
 
 .publication-card h3 {
-  margin: 17px 0 12px;
+  margin: 10px 0 8px;
   color: var(--ink);
-  font-size: clamp(21px, 2vw, 28px);
-  letter-spacing: -.03em;
-  line-height: 1.12;
+  font-size: clamp(15px, 1.1vw, 17px);
+  letter-spacing: -.02em;
+  line-height: 1.22;
 }
 
 .publication-card-copy > p {
   margin: 0;
+  overflow: hidden;
   color: var(--ink-2);
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: 12px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .publication-card footer {
   display: flex;
-  margin-top: 24px;
-  padding-top: 17px;
+  margin-top: 14px;
+  padding-top: 12px;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 10px;
   border-top: 1px solid var(--line);
 }
 
 .publication-card footer strong {
   color: var(--ink);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .publication-card footer a {
   color: var(--blue);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   text-decoration: none;
 }
@@ -2214,6 +2269,12 @@ kbd {
   font-size: 13px;
 }
 
+@media (max-width: 1100px) {
+  .publication-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .publications-filters {
     align-items: stretch;
@@ -2223,7 +2284,9 @@ kbd {
   .publication-range-filter {
     flex-basis: auto;
   }
+}
 
+@media (max-width: 560px) {
   .publication-grid {
     grid-template-columns: 1fr;
   }
@@ -3640,8 +3703,9 @@ kbd {
 }
 .reference-home .hero-actions {
   display: flex;
-  margin-top: 25px;
-  gap: 12px;
+  align-items: center;
+  margin-top: 68px;
+  gap: 28px;
   flex-wrap: wrap;
 }
 
@@ -3688,16 +3752,31 @@ kbd {
 
 /* CONHEÇA O PANORAMA DO ESTADO */
 .reference-home .hero-actions .button-ghost {
-  border: 1px solid rgba(255, 255, 255, .45);
-  background: rgba(255, 255, 255, .07);
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   color: #fff;
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
+}
+
+.reference-home .hero-actions .button-ghost::after {
+  display: none;
+}
+
+.reference-home .hero-actions .button-ghost .action-icon {
+  color: var(--brand-yellow);
 }
 
 .reference-home .hero-actions .button-ghost:hover {
-  border-color: rgba(255, 255, 255, .8);
-  background: rgba(255, 255, 255, .13);
-  transform: translateY(-2px);
+  border-color: transparent;
+  background: transparent;
+  color: var(--brand-yellow);
+  transform: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .hero-data-art { top: 58%; }
 .reference-home .manifesto {
@@ -5269,14 +5348,16 @@ button {
 
 .reference-home .hero-copy {
   top: 20%;
-  width: min(790px, 56vw);
+  width: min(1080px, 72vw);
+  max-width: none;
 }
 
 .reference-home .hero-copy h1 {
-  font-size: clamp(40px, 3.15vw, 62px);
-  line-height: 1.06;
+  font-size: clamp(44px, 3.9vw, 72px);
+  line-height: 1.04;
   text-transform: none;
 }
+
 
 .reference-home .hero-copy h1 strong {
   color: var(--gold);
@@ -5292,6 +5373,31 @@ button {
 .reference-home .hero-actions .button {
   justify-content: flex-start;
   gap: 10px;
+}
+
+.reference-home .hero-actions .button-ghost {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #fff;
+  backdrop-filter: none;
+}
+
+.reference-home .hero-actions .button-ghost::after {
+  display: none;
+}
+
+.reference-home .hero-actions .button-ghost:hover {
+  border-color: transparent;
+  background: transparent;
+  color: var(--brand-yellow);
+  transform: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  box-shadow: none;
 }
 
 .reference-home .hero-actions .action-icon {
@@ -5539,8 +5645,17 @@ button {
   color: #fff;
 }
 
+.home-analysis .analysis-heading {
+  width: 100%;
+  max-width: none;
+}
+
 .home-analysis .analysis-grid {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
   margin-top: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 14px;
 }
 
@@ -6990,19 +7105,19 @@ body * {
   width: 100%;
   padding: clamp(70px, 7vw, 108px) clamp(24px, 6vw, 96px);
   grid-template-columns: minmax(260px, .72fr) minmax(0, 1.38fr);
-  gap: clamp(42px, 7vw, 100px);
+  gap: clamp(42px, 5vw, 64px);
   background: #fff;
   color: #000;
 }
 
 .home-why > * {
   width: 100%;
-  max-width: 760px;
+  max-width: none;
 }
 
 .home-why-heading {
   position: relative;
-  justify-self: end;
+  justify-self: start;
   padding: 4px 0 0 26px;
   border-left: 5px solid var(--brand-yellow);
 }
@@ -7030,24 +7145,8 @@ body * {
   line-height: 1.02;
 }
 
-.home-why-symbol {
-  display: grid;
-  width: 92px;
-  height: 92px;
-  margin-top: 34px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--brand-blue);
-}
-
-.home-why-symbol img {
-  width: 68px;
-  height: 68px;
-  object-fit: contain;
-}
-
 .home-why-copy {
-  max-width: 780px;
+  max-width: none;
   padding-top: 2px;
 }
 
@@ -7347,17 +7446,6 @@ body * {
   .home-why-heading {
     justify-self: stretch;
     padding-left: 20px;
-  }
-
-  .home-why-symbol {
-    width: 76px;
-    height: 76px;
-    margin-top: 26px;
-  }
-
-  .home-why-symbol img {
-    width: 56px;
-    height: 56px;
   }
 }
 
@@ -7800,6 +7888,23 @@ body * {
   height: calc(100dvh - var(--portal-header-height));
 }
 
+/* Home now shares the standard top navigation instead of its own header.
+   The header floats transparently over the hero photo until scrolled, so
+   home doesn't reserve header space like the other pages do. */
+.has-top-navigation .home-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.has-top-navigation .reference-home {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.has-top-navigation .reference-home .hero {
+  min-height: 100%;
+}
+
 .top-navigation {
   position: sticky;
   z-index: 200;
@@ -7809,6 +7914,31 @@ body * {
   background: linear-gradient(100deg, #06142f, #0b2749 62%, #0c3559);
   color: #fff;
   box-shadow: 0 8px 26px rgba(6, 20, 47, .14);
+  transition: background .4s ease, box-shadow .4s ease, border-color .4s ease;
+}
+
+.top-navigation.is-home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.top-navigation.is-home.is-scrolled {
+  border-bottom-color: rgba(255, 255, 255, .1);
+  background: linear-gradient(100deg, #06142f, #0b2749 62%, #0c3559);
+  box-shadow: 0 8px 26px rgba(6, 20, 47, .14);
+}
+
+/* The floating home header is position:fixed, so it doesn't reserve layout
+   space like it does on other pages. Sections below the hero need this
+   offset so scrollIntoView() (used by "Veja mais") doesn't land their
+   heading underneath the header. */
+.has-top-navigation #home-analysis {
+  scroll-margin-top: var(--portal-header-height);
 }
 
 .top-navigation-bar {
@@ -8208,7 +8338,39 @@ body * {
   gap: 2px;
 }
 
+.top-menu-panel-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.top-menu-panel-info-button {
+  display: grid;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #7288a1;
+  transition: background .16s ease, color .16s ease;
+}
+
+.top-menu-panel-info-button:hover,
+.top-menu-panel-info-button:focus-visible {
+  background: #eaf2f7;
+  color: var(--brand-blue);
+  outline: none;
+}
+
+.top-menu-panel-info-button svg {
+  width: 14px;
+  height: 14px;
+}
+
 .top-menu-panel-link {
+  flex: 1;
   min-width: 0;
   min-height: 33px;
   padding: 6px 8px;
@@ -8459,7 +8621,7 @@ body * {
   }
 }
 
-.top-menu-panel-link.is-nested {
+.top-menu-panel-item.is-nested .top-menu-panel-link {
   padding-left: 12px;
 }
 
