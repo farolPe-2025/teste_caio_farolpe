@@ -5599,7 +5599,7 @@ button {
 
 /* Transição da abertura para a leitura rápida */
 .home-more-strip {
-  bottom: clamp(56px, 7vh, 84px);
+  bottom: clamp(24px, 3.5vh, 44px);
   border: 0;
   background: transparent;
   pointer-events: none;
