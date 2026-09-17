@@ -376,7 +376,9 @@ export const panels: Panel[] = [
     eyebrow: "PAC · IBGE",
     description:
       "Panorama estrutural do comércio pernambucano, com indicadores de empresas, pessoal ocupado, salários e receita.",
-    source: "Link a definir",
+    source: "Power BI",
+    embedUrl:
+      "https://app.powerbi.com/view?r=eyJrIjoiY2RjNmI4MDgtMmU3ZS00MzkwLThhM2YtNGJkZmI3NmVjNmVlIiwidCI6ImEzMDA5OGM1LWQ1NDMtNDc2Zi04NTM4LTE3YjhlYmE0MzM4MSJ9",
     info: {
       eyebrow: "Sobre o indicador · PAC",
       title: "Pesquisa Anual de Comércio (PAC)",
